@@ -9,7 +9,7 @@ class User(AbstractUser):
     first_name = models.CharField(max_length=35)
     last_name = models.CharField(max_length=35)
     email = models.EmailField(max_length=70, unique=True)
-    username = models.CharField(max_length=45)
+    username = models.CharField(max_length=45, unique=True)
     avatar = models.ImageField(upload_to='users/avatars/', default='defaults/avatars/default_user_avatar.jpg')
 
     date_joined = models.DateTimeField(default=timezone.now)

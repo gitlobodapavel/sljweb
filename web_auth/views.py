@@ -21,7 +21,6 @@ def registration(request):
             user = form.save(commit=False)
             user.is_active = False
             user.save()
-            print('User saved !')
             current_site = get_current_site(request)
             mail_subject = 'Activate your SLJ account.'
             message = render_to_string('auth/email/activation_email.html', {
@@ -34,11 +33,11 @@ def registration(request):
             email = EmailMessage(
                 mail_subject, message, to=[to_email]
             )
-            print('Sending email...')
             email.send()
-            print('Email sent !')
 
-            return redirect('/')
+            return redirect('/auth/login')
+        else:
+            return HttpResponse('Opps it looks like error happened during registration... Please, try again !')
     else:
         form = SignupForm
         return render(request, 'auth/registration.html', {
@@ -48,7 +47,7 @@ def registration(request):
 
 def login(request):
     if request.user.is_authenticated:
-        return redirect('/')
+        return redirect('/web_interface/profile')
 
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -57,7 +56,7 @@ def login(request):
         user = auth.authenticate(request, email=email, password=password)
         if user is not None:
             auth.login(request, user)
-            return redirect('/')
+            return redirect('/web_interface/profile')
         else:
             return redirect('/auth/login/')
     else:
@@ -83,6 +82,6 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+        return HttpResponse('Thank you for your email confirmation. Now you can <a href="/auth/login">login</a> your account.')
     else:
         return HttpResponse('Activation link is invalid!')

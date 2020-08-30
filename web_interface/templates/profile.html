@@ -1,0 +1,5 @@
+{% extends 'base.html' %}
+{% block title %} SLJ Home {% endblock %}
+{% block content %}
+Welcome home, {{ user.first_name }} <a href="/auth/logout">logout</a>
+{% endblock %}

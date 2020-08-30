@@ -13,6 +13,14 @@ class SignupForm(UserCreationForm):
 
 class LoginForm(forms.ModelForm):
 
+    email = forms.EmailField(label='', widget=forms.EmailInput(attrs={
+        'placeholder': 'email *'
+    }))
+
+    password = forms.CharField(label='', widget=forms.PasswordInput(attrs={
+        'placeholder': 'password *'
+    }))
+
     class Meta:
         model = get_user_model()
         fields = ('email', 'password')

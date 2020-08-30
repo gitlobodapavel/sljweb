@@ -117,10 +117,13 @@ USE_L10N = True
 USE_TZ = True
 
 
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -131,3 +134,12 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'sljwebapp@gmail.com'
 EMAIL_HOST_PASSWORD = 'user.login()'
 EMAIL_PORT = 587
+
+STATIC_URL = '/static/'
+
+# Add these new lines
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
