@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from .forms import PetCreationForm
+from .forms import PetCreationForm, EditUserForm
 from django.http import HttpResponse
 from web_auth.models import Pet
 
@@ -72,3 +72,20 @@ def delete_pet_profile(request, pk):
         return redirect('/web_interface/profile')
     else:
         return HttpResponse("You can not delete this pet profile !")
+
+
+def edit_user_profile(request, pk):
+    if request.method == 'POST':
+        User = get_user_model()
+        instance = get_object_or_404(User, pk=pk)
+        form = EditUserForm(request.POST or None, instance=instance)
+        if form.is_valid():
+            form.save()
+            return redirect('/web_interface/profile')
+    else:
+        User = get_user_model()
+        instance = get_object_or_404(User, pk=pk)
+        form = EditUserForm(instance=instance)
+        return render(request, 'edit_user_profile.html', {
+            'form': form,
+        })

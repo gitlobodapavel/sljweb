@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% block title %} SLJ Home {% endblock %}
 {% block content %}
-Welcome home, {{ user.first_name }} <a href="/auth/logout">logout</a> or
+Welcome home, {{ user.first_name }} <a href="/web_interface/edit_profile/{{ user.pk }}">edit profile</a> <a href="/auth/logout">logout</a> <br>
+<img src="{{ user.avatar.url }}" alt=""><br>
 <a href="/web_interface/newpet">Register your new Pet</a>
 <br><br><br>
 Your pets:

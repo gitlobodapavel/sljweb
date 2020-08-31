@@ -14,6 +14,9 @@ class User(AbstractUser):
 
     date_joined = models.DateTimeField(default=timezone.now)
 
+    bio = models.TextField(blank=True)
+    status = models.CharField(blank=True, max_length=70)
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'username']
 
