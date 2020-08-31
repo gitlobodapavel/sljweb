@@ -11,4 +11,13 @@ Your pets:
  <a href="/web_interface/edit_pet/{{ pet.pk }}">Edit</a>
  <a href="/web_interface/delete_pet/{{ pet.pk }}">Remove</a>
 {% endfor %}
+
+<br><br>
+<a href="/web_interface/newproduct">Add new product</a> <br><br><br>
+Your products:
+{% for product in products %}
+<br><a href="/web_interface/pet/{{ product.pk }}">{{ product.title }}</a>
+ <a href="/web_interface/edit_product/{{ product.pk }}">Edit</a>
+ <a href="/web_interface/delete_product/{{ product.pk }}">Remove</a>
+{% endfor %}
 {% endblock %}

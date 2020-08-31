@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from .forms import PetCreationForm, EditUserForm
+from .forms import PetCreationForm, EditUserForm, PlaceProductForm, EditProductForm
 from django.http import HttpResponse
-from web_auth.models import Pet
+from web_auth.models import Pet, Product
 
 # Create your views here.
 
@@ -12,10 +12,12 @@ from web_auth.models import Pet
 def profile(request):
     user = request.user
     pets = Pet.objects.filter(owner=user)
+    products = Product.objects.filter(seller=user)
 
     return render(request, 'profile.html', {
         'user': user,
         'pets': pets,
+        'products': products,
     })
 
 
@@ -55,7 +57,8 @@ def edit_pet_profile(request, pk):
             form.save()
             return redirect('/web_interface/profile')
     else:
-        form = PetCreationForm
+        instance = get_object_or_404(Pet, pk=pk)
+        form = PetCreationForm(instance=instance)
         pet = Pet.objects.get(pk=pk)
         return render(request, 'edit_pet.html', {
             'form': form,
@@ -89,3 +92,44 @@ def edit_user_profile(request, pk):
         return render(request, 'edit_user_profile.html', {
             'form': form,
         })
+
+
+def newpoduct(request):
+    if request.method == 'POST':
+        user = request.user
+        form = PlaceProductForm(request.POST)
+        if form.is_valid():
+            product = form.save(commit=False)
+            product.seller = user
+            product.save()
+            return redirect('/web_interface/profile')
+    else:
+        form = PlaceProductForm
+        return render(request, 'newproduct.html', {
+            'form': form
+        })
+
+
+def edit_product(request, pk):
+    if request.method == 'POST':
+        instance = get_object_or_404(Product, pk=pk)
+        form = EditProductForm(request.POST or None, instance=instance)
+        if form.is_valid():
+            form.save()
+            return redirect('/web_interface/profile')
+    else:
+        instance = get_object_or_404(Product, pk=pk)
+        form = EditProductForm(instance=instance)
+        return render(request, 'edit_product.html', {
+            'form': form
+        })
+
+
+def delete_product(request, pk):
+    user = request.user
+    product = Product.objects.get(pk=pk)
+    if product.seller == user:
+        product.delete()
+        return redirect('/web_interface/profile')
+    else:
+        return HttpResponse('You have no access to delete this product !')
