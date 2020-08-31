@@ -1,5 +1,13 @@
 {% extends 'base.html' %}
 {% block title %} SLJ Home {% endblock %}
 {% block content %}
-Welcome home, {{ user.first_name }} <a href="/auth/logout">logout</a>
+Welcome home, {{ user.first_name }} <a href="/auth/logout">logout</a> or
+<a href="/web_interface/newpet">Register your new Pet</a>
+<br><br><br>
+Your pets:
+{% for pet in pets %}
+<br><a href="/web_interface/pet/{{ pet.pk }}">{{ pet.name }}</a>
+ <a href="/web_interface/edit_pet/{{ pet.pk }}">Edit</a>
+ <a href="/web_interface/delete_pet/{{ pet.pk }}">Remove</a>
+{% endfor %}
 {% endblock %}

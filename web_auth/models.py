@@ -23,9 +23,7 @@ class User(AbstractUser):
 
 class Pet(models.Model):
     name = models.CharField(max_length=35)
-    nickname = models.CharField(max_length=35, blank=True)
-    date_birth = models.DateTimeField()
-    avatar = models.ImageField(upload_to='pets/avatars', default='defaults/avatars/default_user_avatar.jpg')
+    avatar = models.ImageField(upload_to='pets/avatars/', default='defaults/avatars/default_pet_avatar.png')
 
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
 

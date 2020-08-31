@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %} SLJ Edit {{ pet.name }} profile {% endblock %}
+{% block content %}
+Welcome home, {{ user.first_name }} <a href="/auth/logout">logout</a>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">Commit</button>
+</form>
+{% endblock %}
