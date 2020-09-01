@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import PetCreationForm, EditUserForm, PlaceProductForm, EditProductForm
 from django.http import HttpResponse
 from web_auth.models import Pet, Product
+from django.db.models import Q
 
 # Create your views here.
 
@@ -140,3 +141,18 @@ def view_product(request, pk):
     return render(request, 'product_view.html', {
         'product': product,
     })
+
+
+def search(request):
+    if 'q' in request.GET:
+        query = request.GET['q']
+        user = get_user_model()
+        users = user.objects.filter(Q(username__icontains=query) | Q(first_name__icontains=query))
+        products = Product.objects.filter(title__icontains=query)
+        return render(request, 'search_results.html', {
+            'users': users,
+            'products': products,
+        })
+    else:
+        query = 'You submitted an empty form ('
+    return HttpResponse(query)

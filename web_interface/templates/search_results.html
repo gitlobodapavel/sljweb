@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %} SLJ {{ product.title }} {% endblock %}
+{% block content %}
+{% for user in users %}
+<div class="user">
+    <a href="view_profile/{{ user.pk }}">{{ user.username }}</a>
+</div>
+<br>
+{% endfor %}
+{% for product in products %}
+<div class="product">
+    <a href="/web_interface/product/{{ product.pk }}">{{ product.title }}</a>
+</div>
+<br>
+{% endfor %}
+{% endblock %}
