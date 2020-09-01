@@ -83,20 +83,26 @@ def delete_pet_profile(request, pk):
 
 
 def edit_user_profile(request, pk):
-    if request.method == 'POST':
-        User = get_user_model()
-        instance = get_object_or_404(User, pk=pk)
-        form = EditUserForm(request.POST or None, instance=instance)
-        if form.is_valid():
-            form.save()
-            return redirect('/web_interface/profile')
+    User = get_user_model()
+    user = User.objects.get(pk=pk)
+
+    if user == request.user:
+        if request.method == 'POST':
+            User = get_user_model()
+            instance = get_object_or_404(User, pk=pk)
+            form = EditUserForm(request.POST or None, instance=instance)
+            if form.is_valid():
+                form.save()
+                return redirect('/web_interface/profile')
+        else:
+            User = get_user_model()
+            instance = get_object_or_404(User, pk=pk)
+            form = EditUserForm(instance=instance)
+            return render(request, 'edit_user_profile.html', {
+                'form': form,
+            })
     else:
-        User = get_user_model()
-        instance = get_object_or_404(User, pk=pk)
-        form = EditUserForm(instance=instance)
-        return render(request, 'edit_user_profile.html', {
-            'form': form,
-        })
+        return HttpResponse("You have no access to edit this profile !")
 
 
 def newpoduct(request):
