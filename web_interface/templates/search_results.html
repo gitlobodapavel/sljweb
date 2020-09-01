@@ -3,7 +3,7 @@
 {% block content %}
 {% for user in users %}
 <div class="user">
-    <a href="view_profile/{{ user.pk }}">{{ user.username }}</a>
+    <a href="/web_interface/profile/{{ user.pk }}">{{ user.username }}</a>
 </div>
 <br>
 {% endfor %}

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %} SLJ {{ user.username }} {% endblock %}
+{% block content %}
+{{ user.username }} <br>
+<img src="{{ user.avatar.url }}" alt=""><br>
+{{ user.first_name }} {{ user.last_name }} <br>
+{{ user.bio }}<br> <br>
+Pets:
+{% for pet in pets %}
+<br><a href="/web_interface/pet/{{ pet.pk }}">{{ pet.name }}</a>
+{% endfor %}
+<br><br>
+
+Products:
+{% for product in products %}
+<br><a href="/web_interface/product/{{ product.pk }}">{{ product.title }}</a>
+{% endfor %}
+<br><br>
+{% endblock %}

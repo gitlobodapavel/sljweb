@@ -51,20 +51,24 @@ def pet_profile(request, pk):
 
 
 def edit_pet_profile(request, pk):
-    if request.method == 'POST':
-        instance = get_object_or_404(Pet, pk=pk)
-        form = PetCreationForm(request.POST or None, instance=instance)
-        if form.is_valid():
-            form.save()
-            return redirect('/web_interface/profile')
+    pet = Pet.objects.get(pk=pk)
+    if pet.owner == request.user:
+        if request.method == 'POST':
+            instance = get_object_or_404(Pet, pk=pk)
+            form = PetCreationForm(request.POST or None, instance=instance)
+            if form.is_valid():
+                form.save()
+                return redirect('/web_interface/profile')
+        else:
+            instance = get_object_or_404(Pet, pk=pk)
+            form = PetCreationForm(instance=instance)
+            pet = Pet.objects.get(pk=pk)
+            return render(request, 'edit_pet.html', {
+                'form': form,
+                'pet': pet,
+            })
     else:
-        instance = get_object_or_404(Pet, pk=pk)
-        form = PetCreationForm(instance=instance)
-        pet = Pet.objects.get(pk=pk)
-        return render(request, 'edit_pet.html', {
-            'form': form,
-            'pet': pet,
-        })
+        return HttpResponse("You have no access to edit this pet !")
 
 
 def delete_pet_profile(request, pk):
@@ -112,18 +116,23 @@ def newpoduct(request):
 
 
 def edit_product(request, pk):
-    if request.method == 'POST':
-        instance = get_object_or_404(Product, pk=pk)
-        form = EditProductForm(request.POST or None, instance=instance)
-        if form.is_valid():
-            form.save()
-            return redirect('/web_interface/profile')
+    product = Product.objects.get(pk=pk)
+    if product.seller == request.user:
+        if request.method == 'POST':
+            instance = get_object_or_404(Product, pk=pk)
+            form = EditProductForm(request.POST or None, instance=instance)
+            if form.is_valid():
+                form.save()
+                return redirect('/web_interface/profile')
+        else:
+            instance = get_object_or_404(Product, pk=pk)
+            form = EditProductForm(instance=instance)
+            return render(request, 'edit_product.html', {
+                'form': form
+            })
     else:
-        instance = get_object_or_404(Product, pk=pk)
-        form = EditProductForm(instance=instance)
-        return render(request, 'edit_product.html', {
-            'form': form
-        })
+        return HttpResponse('You have no access to edit this product !')
+
 
 
 def delete_product(request, pk):
@@ -148,7 +157,7 @@ def search(request):
         query = request.GET['q']
         user = get_user_model()
         users = user.objects.filter(Q(username__icontains=query) | Q(first_name__icontains=query))
-        products = Product.objects.filter(title__icontains=query)
+        products = Product.objects.filter(Q(title__icontains=query))
         return render(request, 'search_results.html', {
             'users': users,
             'products': products,
@@ -156,3 +165,15 @@ def search(request):
     else:
         query = 'You submitted an empty form ('
     return HttpResponse(query)
+
+
+def profile_view(request, pk):
+    User = get_user_model()
+    user = User.objects.get(pk=pk)
+    pets = Pet.objects.filter(owner=user)
+    products = Product.objects.filter(seller=user)
+    return render(request, 'profile_view.html', {
+        'user': user,
+        'products': products,
+        'pets': pets,
+    })
