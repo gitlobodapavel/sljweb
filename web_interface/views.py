@@ -133,3 +133,10 @@ def delete_product(request, pk):
         return redirect('/web_interface/profile')
     else:
         return HttpResponse('You have no access to delete this product !')
+
+
+def view_product(request, pk):
+    product = Product.objects.get(pk=pk)
+    return render(request, 'product_view.html', {
+        'product': product,
+    })

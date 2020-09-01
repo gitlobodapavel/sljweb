@@ -35,7 +35,7 @@ def registration(request):
             )
             email.send()
 
-            return redirect('/auth/login')
+            return redirect('/auth/confirm')
         else:
             return HttpResponse('Opps it looks like error happened during registration... Please, try again !')
     else:
@@ -85,3 +85,9 @@ def activate(request, uidb64, token):
         return HttpResponse('Thank you for your email confirmation. Now you can <a href="/auth/login">login</a> your account.')
     else:
         return HttpResponse('Activation link is invalid!')
+
+
+def confirm(request):
+    return render(request, 'auth/confirm.html', {
+
+    })

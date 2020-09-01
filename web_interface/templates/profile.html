@@ -3,21 +3,24 @@
 {% block content %}
 Welcome home, {{ user.first_name }} <a href="/web_interface/edit_profile/{{ user.pk }}">edit profile</a> <a href="/auth/logout">logout</a> <br>
 <img src="{{ user.avatar.url }}" alt=""><br>
-<a href="/web_interface/newpet">Register your new Pet</a>
-<br><br><br>
+
 Your pets:
 {% for pet in pets %}
 <br><a href="/web_interface/pet/{{ pet.pk }}">{{ pet.name }}</a>
  <a href="/web_interface/edit_pet/{{ pet.pk }}">Edit</a>
  <a href="/web_interface/delete_pet/{{ pet.pk }}">Remove</a>
 {% endfor %}
+<br><br>
+<a href="/web_interface/newpet">Register your new Pet</a>
 
 <br><br>
-<a href="/web_interface/newproduct">Add new product</a> <br><br><br>
+
 Your products:
 {% for product in products %}
-<br><a href="/web_interface/pet/{{ product.pk }}">{{ product.title }}</a>
+<br><a href="/web_interface/product/{{ product.pk }}">{{ product.title }}</a>
  <a href="/web_interface/edit_product/{{ product.pk }}">Edit</a>
  <a href="/web_interface/delete_product/{{ product.pk }}">Remove</a>
 {% endfor %}
+<br><br>
+<a href="/web_interface/newproduct">Add new product</a>
 {% endblock %}

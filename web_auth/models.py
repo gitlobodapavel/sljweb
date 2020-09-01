@@ -38,7 +38,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to='products/images', default='defaults/products/default_product_image.png')
     title = models.CharField(max_length=70)
     description = models.TextField()
-    price = models.IntegerField()
+    price = models.FloatField()
     seller = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):

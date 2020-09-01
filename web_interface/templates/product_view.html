@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block title %} SLJ {{ product.title }} {% endblock %}
+{% block content %}
+{{ product.title }} <br> <img src="{{ product.image.url }}" alt=""> <br>
+{{ product.description }} <br>
+{{ product.price }}
+{% endblock %}
