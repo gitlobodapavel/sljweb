@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %} SLJ Chat {% endblock %}
+{% block content %}
+{% for chat in chats %}
+<a href="{{ chat.pk }}">Chat with
+    {% if chat.members.first == user %} {{ chat.members.last }} {% endif %}
+    {% if chat.members.last == user %} {{ chat.members.first }} {% endif %}
+</a> <br>
+{% endfor %}
+{% endblock %}

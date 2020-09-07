@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %} SLJ Home {% endblock %}
+{% block title %} SLJ Pet {{ pet.name }} {% endblock %}
 {% block content %}
 Welcome to {{ pet.name }} profile <br> <img src="{{ pet.avatar.url }}" alt="">
 {% endblock %}

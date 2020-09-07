@@ -21,7 +21,8 @@ from .settings import MEDIA_URL, MEDIA_ROOT, STATIC_URL, STATIC_ROOT
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('web_auth.urls')),
-    path('web_interface/', include('web_interface.urls'))
+    path('web_interface/', include('web_interface.urls')),
+    path('chat/', include('chat.urls')),
 ]
 urlpatterns += static(STATIC_URL, document_root=STATIC_ROOT)
 urlpatterns += static(MEDIA_URL, document_root=MEDIA_ROOT)

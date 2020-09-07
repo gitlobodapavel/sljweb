@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'web_auth',
     'web_interface',
+    'chat',
 ]
 
 MIDDLEWARE = [

@@ -3,6 +3,9 @@
 {% block content %}
 {{ user.username }} <br>
 <img src="{{ user.avatar.url }}" alt=""><br>
+<br><br>
+<a href="/chat/join/{{ user.pk }}">Message</a>
+<br><br>
 {{ user.first_name }} {{ user.last_name }} <br>
 {{ user.bio }}<br> <br>
 Pets:

@@ -7,7 +7,9 @@
 </form>
 Welcome home, {{ user.first_name }} <a href="/web_interface/edit_profile/{{ user.pk }}">edit profile</a> <a href="/auth/logout">logout</a> <br>
 <img src="{{ user.avatar.url }}" alt=""><br>
-
+<br>
+<a href="/chat">Chat</a>
+<br> <br>
 Your pets:
 {% for pet in pets %}
 <br><a href="/web_interface/pet/{{ pet.pk }}">{{ pet.name }}</a>

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import User, Pet, Product, ProductImage
+from .models import User, Pet, Product, ProductImage, Chat, Message
 
 # Register your models here.
 
@@ -23,3 +23,5 @@ class ProductImageAdmin(admin.ModelAdmin):
 
 admin.site.register(User)
 admin.site.register(Pet)
+admin.site.register(Chat)
+admin.site.register(Message)

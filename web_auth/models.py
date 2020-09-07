@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
 
 
 class User(AbstractUser):
@@ -51,3 +52,16 @@ class ProductImage(models.Model):
 
     def __str__(self):
         return self.product
+
+
+class Chat(models.Model):
+    members = models.ManyToManyField(User, verbose_name=_("Member"))
+
+
+class Message(models.Model):
+    chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    message = models.TextField()
+
+    def __str__(self):
+        return self.message
